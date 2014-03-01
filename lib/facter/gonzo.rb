@@ -1,19 +1,19 @@
 Facter.add(:gonzo_role) do
   setcode do
-    
-    classes = Facter.value('puppet_vardir') + '/classes.txt'
-    if File.exist? classes
+    input = Facter.value('puppet_vardir') + '/classes.txt'
+    if File.exist? input
       # Avoid loading whole file into memory, even tho' small
-      open(classes) { |f| f.each_line.detect { |line| /^role/.match(line) } }
+      open(input) { |f| f.each_line.detect { |line| /^role/.match(line) } }
     end
   end
 end
 
 Facter.add(:gonzo_release) do
   setcode do
-    gonzo = "/etc/sysconfig.d/gonzo"
-    if File.exist? gonzo
-      open(classes) { |f| f.each_line.detect { |line| /^release=(.+)$/i.match(line)[1] } }
+    input = "/etc/sysconfig/gonzo"
+    if File.exist? input
+      # Get first line matching release= then get value
+      open(input) { |f| f.each_line.detect { |line| /^release=.+$/i.match(line) } }.match(/\w+=(.+)/)[1]
     end
   end
 end
