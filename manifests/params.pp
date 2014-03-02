@@ -9,6 +9,8 @@ class gonzo::params {
   # where plugins are stored
   if $::is_pe == 'true' {
     $mco_dir     = '/opt/puppet/libexec/mcollective'
+    $mco_etc_dir = '/etc/puppetlabs/mcollective'
+    $mco_ssl_dir = '/etc/puppetlabs/mcollective/ssl'
     $mco_service = 'pe-mcollective'
   }
   else {
@@ -16,6 +18,8 @@ class gonzo::params {
       /(?i:Debian|Ubuntu|Mint)/ => '/usr/share/mcollective/plugins',
       default                   => '/usr/libexec/mcollective',
     }
+    $mco_etc_dir = '/etc/mcollective'
+    $mco_ssl_dir = '/etc/mcollective/ssl'
     $mco_service = 'mcollective'
   }
 
