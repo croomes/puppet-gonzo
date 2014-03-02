@@ -8,6 +8,16 @@ Facter.add(:gonzo_role) do
   end
 end
 
+Facter.add(:gonzo_tier) do
+  setcode do
+    input = "/etc/sysconfig/gonzo"
+    if File.exist? input
+      # Get first line matching release= then get value
+      open(input) { |f| f.each_line.detect { |line| /^tier=.+$/i.match(line) } }.match(/\w+=(.+)/)[1]
+    end
+  end
+end
+
 Facter.add(:gonzo_release) do
   setcode do
     input = "/etc/sysconfig/gonzo"
