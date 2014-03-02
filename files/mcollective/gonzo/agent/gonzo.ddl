@@ -11,12 +11,12 @@ requires :mcollective => "2.2.1"
 action "run", :description => "Run Puppet in enforcement mode" do
 
     input :environment,
-          :prompt      => "Environment",
-          :description => "Which Puppet environment(release tag) to run against",
-          :type        => :string,
-          :validation  => :puppet_variable,
-          :optional    => true,
-          :maxlength   => 50
+          :prompt        => "Environment",
+          :description   => "Which Puppet environment(release tag) to run against",
+          :type          => :string,
+          :validation    => '^[a-zA-Z\-_\d]+$',
+          :optional      => true,
+          :maxlength     => 50
 
     output :output,
            :description  => "Output from the Puppet run",
@@ -33,12 +33,12 @@ end
 action "check", :description => "Run Puppet in noop mode" do
 
     input :environment,
-          :prompt      => "Environment",
-          :description => "Which Puppet environment(release tag) to run against",
-          :type        => :string,
-          :validation  => :puppet_variable,
-          :optional    => true,
-          :maxlength   => 50
+          :prompt        => "Environment",
+          :description   => "Which Puppet environment(release tag) to run against",
+          :type          => :string,
+          :validation    => '^[a-zA-Z\-_\d]+$',
+          :optional      => true,
+          :maxlength     => 50
 
     output :output,
            :description  => "Output from the Puppet run",
