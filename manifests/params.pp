@@ -23,4 +23,16 @@ class gonzo::params {
     $mco_service = 'mcollective'
   }
 
+  case $::osfamily {
+    /(?i:Debian|Ubuntu|Mint)/: {
+      $config    = '/etc/default/gonzo'
+    }
+    'RedHat': {
+      $config    = '/etc/sysconfig/gonzo'
+    }
+    default: {
+      warning("The ${module_name} module is not supported on an ${::osfamily} based system.")
+      $config    = '/etc/gonzo'
+    }
+  }
 }

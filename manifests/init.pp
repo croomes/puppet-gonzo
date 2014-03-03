@@ -10,6 +10,7 @@
 class gonzo (
   $tier        = $::tier,
   $release     = $::environment,
+  $config      = $gonzo::params::config,
   $mco_dir     = $gonzo::params::mco_dir,
   $mco_etc_dir = $gonzo::params::mco_etc_dir,
   $mco_ssl_dir = $gonzo::params::mco_ssl_dir,
@@ -22,6 +23,6 @@ class gonzo (
   validate_absolute_path($mco_ssl_dir)
 
   class { 'gonzo::mcollective': } ->
-  class { 'gonzo::sysconfig': } ->
+  class { 'gonzo::config': } ->
   Class['gonzo']
 }
