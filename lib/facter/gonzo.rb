@@ -27,3 +27,12 @@ Facter.add(:gonzo_release) do
     end
   end
 end
+
+Facter.add(:gonzo_available_releases) do
+  setcode do
+    environment_dir = "/etc/puppetlabs/puppet/environments"
+    if Dir.exist? environment_dir
+      Pathname.glob("#{environment_dir}/*/").sort.map { |i| i.basename.to_s }
+    end
+  end
+end
