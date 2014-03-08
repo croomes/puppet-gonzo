@@ -9,7 +9,7 @@
 #
 class gonzo (
   $tier        = $::tier,
-  $release     = $::environment,
+  $release     = $::release,
   $config      = $gonzo::params::config,
   $mco_dir     = $gonzo::params::mco_dir,
   $mco_etc_dir = $gonzo::params::mco_etc_dir,
