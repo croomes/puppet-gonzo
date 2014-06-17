@@ -15,12 +15,14 @@ module MCollective
       action "run" do
 
         environment = request[:environment] if request[:environment]
+        tags = request[:tags] if request[:tags]
         options = []
         options << "--test"
         options << "--detailed-exitcodes"
         options << "--noop"
         options << "--color false"
         options << "--environment %s" % environment if environment
+        options << "--tags %s" % tags if tags
         command = [@puppet_command].concat(options).join(" ")
 
         reply[:exitcode] = run(command, :stdout => :output, :stderr => :output, :chomp => true)
@@ -43,12 +45,14 @@ module MCollective
       action "check" do
 
         environment = request[:environment] if request[:environment]
+        tags = request[:tags] if request[:tags]
         options = []
         options << "--test"
         options << "--detailed-exitcodes"
         options << "--noop"
         options << "--color false"
         options << "--environment %s" % environment if environment
+        options << "--tags %s" % tags if tags
         command = [@puppet_command].concat(options).join(" ")
 
         reply[:exitcode] = run(command, :stdout => :output, :stderr => :output, :chomp => true)
