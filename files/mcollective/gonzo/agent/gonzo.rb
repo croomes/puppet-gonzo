@@ -22,7 +22,9 @@ module MCollective
         options << "--noop"
         options << "--color false"
         options << "--environment %s" % environment if environment
-        options << "--tags %s" % tags if tags
+        m = PuppetAgentMgr.manager
+        options << "--tags %s" % tags if tags and !m.daemon_present
+        options << "--force" if !m.daemon_present
         command = [@puppet_command].concat(options).join(" ")
 
         reply[:exitcode] = run(command, :stdout => :output, :stderr => :output, :chomp => true)
@@ -52,7 +54,9 @@ module MCollective
         options << "--noop"
         options << "--color false"
         options << "--environment %s" % environment if environment
-        options << "--tags %s" % tags if tags
+        m = PuppetAgentMgr.manager
+        options << "--tags %s" % tags if tags and !m.daemon_present
+        options << "--force" if !m.daemon_present
         command = [@puppet_command].concat(options).join(" ")
 
         reply[:exitcode] = run(command, :stdout => :output, :stderr => :output, :chomp => true)
