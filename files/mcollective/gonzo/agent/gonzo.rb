@@ -19,7 +19,6 @@ module MCollective
         options = []
         options << "--test"
         options << "--detailed-exitcodes"
-        options << "--noop"
         options << "--color false"
         options << "--environment %s" % environment if environment
         m = MCollective::Util::PuppetAgentMgr.manager
