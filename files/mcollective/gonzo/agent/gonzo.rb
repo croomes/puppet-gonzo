@@ -19,7 +19,6 @@ module MCollective
         options = []
         options << "--test"
         options << "--detailed-exitcodes"
-        options << "--noop"
         options << "--color false"
         options << "--environment %s" % environment if environment
         m = MCollective::Util::PuppetAgentMgr.manager
@@ -29,14 +28,17 @@ module MCollective
         # If an agent is already applying a catalog, wait for it to finish
         sleep(1) while m.applying?
 
-        reply[:exitcode] = run(command, :stdout => :output, :stderr => :output, :chomp => true)
-        Log.info("exitcode: " + reply[:exitcode].to_s)
+        out = []
+        err = ""
+        reply[:status] = run(command, :stdout => :out, :stderr => :err,
+          :chomp => true)
+        Log.info("status: " + reply[:status].to_s)
 
-        case reply[:exitcode]
+        case reply[:status]
           when 0
-            reply[:message] = "No Changes Made  running '%s' ( env '%s' )" % [command,environment]
+            reply[:msg] = "No Changes Made  running '%s' ( env '%s' )" % [command,environment]
           when 2
-            reply[:message] = "Changes Made  running '%s'" % command
+            reply[:msg] = "Changes Made  running '%s'" % command
           when 4
             reply.fail! "Failures Occurred running '%s'" % command
           when 6
@@ -63,12 +65,15 @@ module MCollective
         # If an agent is already applying a catalog, wait for it to finish
         sleep(1) while m.applying?
 
-        reply[:exitcode] = run(command, :stdout => :output, :stderr => :output, :chomp => true)
-        Log.info("exitcode: " + reply[:exitcode].to_s)
+        out = []
+        err = ""
+        reply[:status] = run(command, :stdout => :out, :stderr => :err,
+          :chomp => true)
+        Log.info("status: " + reply[:status].to_s)
 
-        case reply[:exitcode]
+        case reply[:status]
           when 0
-            reply[:message] = "No Changes Made  running '%s'" % command
+            reply[:msg] = "No Changes Made  running '%s'" % command
           when 2
             reply.fail! "Pending Changes running '%s'" % command
           when 4
